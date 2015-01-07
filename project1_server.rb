@@ -19,11 +19,10 @@ get ('/create') do
 end	
 
 post ('/create') do 
-	Document.create({title: params["title"], content: params["content"], image: params["image"]})
-
 	Author.create({name: params["name"]})
-
-redirect '/create'
+	author_id = Author.last.id
+	Document.create({title: params["title"], content: params["content"], image: params["image"], author_id: author_id })
+	redirect '/create'
 end
 
 get ('/documents/:id') do
@@ -32,6 +31,31 @@ get ('/documents/:id') do
 	Mustache.render(File.read('./doc_content.html'), {doc: doc})
 	#can keep adding stuff in template you are using for this route
 end
+
+get ('/documents/:id/edit') do
+	doc = Document.find(params[:id])
+	author = Author.find(doc.author_id)
+	Mustache.render(File.read('./document_edit.html'), {doc: doc, author: author })
+end	
+
+put ('/documents/:id/edit') do
+	doc = Document.find(params[:id])
+	author = Author.find(doc.author_id)
+	author.update(name: params[:name])
+	doc.update(title: params["title"], content: params["content"], image: params["image"])
+	author.save
+	doc.save
+	redirect("/documents/#{params[:id]}")
+end	
+
+delete ('/documents/:id') do
+	doc = Document.find(params[:id])
+	doc.destroy
+	redirect '/'
+end	
+
+# get ('/documents/:id/edit') do
+# 	doc = Document.find(params[:id])
 
 
 

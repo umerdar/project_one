@@ -1,0 +1,19 @@
+<DOCTYPE html>
+<html lang='en'>
+<body>
+	{{#doc}}
+	<form action="/documents/{{id}}/edit" method="POST">
+	   <input type="hidden" name="_method" value="PUT">
+	   <input type="text" name="title" value="{{title}}" />
+	   <input type="text" name="content" value="{{content}}" />
+	   <input type="text" name="image" value="{{image}}" />
+	{{/doc}}
+	   <input type="text" name="name" value="{{author.name}}" />
+		<button>Update</button>
+	</form>
+	<form action="/documents/{{doc.id}}" method="POST">
+	   <input type="hidden" name="_method" value="DELETE">
+	   <button>Delete</button>
+	</form>
+</body>
+</html>	

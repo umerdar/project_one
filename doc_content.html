@@ -1,6 +1,9 @@
 <DOCTYPE html>
 <html>
 <body>
-	<p> {{#doc}}{{content}}{{/doc}} </p>
+	{{#doc}}
+		<p> {{content}} </p>
+		<a href="/documents/{{id}}/edit">Edit</a>
+	{{/doc}}
 </body>
 </html>	
